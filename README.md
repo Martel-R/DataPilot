@@ -4,7 +4,7 @@
 
 ---
 
-##  архитектура
+## Arquitetura
 
 O DataPilot utiliza uma arquitetura de microsserviços orquestrada com Docker Compose, projetada para ser escalável e segura. As principais camadas são:
 
