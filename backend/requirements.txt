@@ -1,0 +1,22 @@
+fastapi
+uvicorn[standard]
+
+# Servidor WSGI para produção
+gunicorn
+
+# Biblioteca para criptografia de dados
+cryptography
+
+# Bibliotecas para autenticação JWT e hashing de senhas
+python-jose[cryptography]
+passlib[bcrypt]
+
+# Driver oficial do Neo4j para Python
+neo4j
+
+# PySpark para processamento de dados
+pyspark==3.3.0
+
+# Biblioteca para acessar o S3 (MinIO)
+s3fs
+boto3

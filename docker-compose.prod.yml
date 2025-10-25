@@ -1,0 +1,52 @@
+version: '3.8'
+
+# ==============================================================================
+# AMBIENTE DE PRODUÇÃO (PROD)
+# Configurações otimizadas para produção: restart policies e sem volumes de código.
+# ==============================================================================
+
+services:
+  minio:
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    restart: always
+
+  postgres_airflow:
+    restart: always
+
+  airflow-webserver:
+    ports:
+      - "8080:8080"
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  airflow-scheduler:
+    restart: always
+
+  neo4j:
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: always
+
+  spark-master:
+    ports:
+      - "8081:8080"
+      - "7077:7077"
+    restart: always
+
+  spark-worker:
+    restart: always
+
+  backend:
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    restart: always
+    # O código já deve estar na imagem, sem volumes para hot-reloading.
+    # Gunicorn é um servidor WSGI mais robusto para produção.
+    command: gunicorn -k uvicorn.workers.UvicornWorker -w 4 main:app --bind 0.0.0.0:${BACKEND_PORT}

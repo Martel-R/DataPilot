@@ -1,0 +1,38 @@
+version: '3.8'
+
+# ==============================================================================
+# AMBIENTE DE DESENVOLVIMENTO (DEV)
+# Adiciona portas, volumes de código e comandos específicos para dev.
+# ==============================================================================
+
+services:
+  minio:
+    ports:
+      - "9000:9000" # API
+      - "9001:9001" # Console UI
+
+  airflow-webserver:
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  neo4j:
+    ports:
+      - "7474:7474" # HTTP
+      - "7687:7687" # Bolt
+
+  spark-master:
+    ports:
+      - "8081:8080" # Spark Master UI
+      - "7077:7077"
+
+  backend:
+    volumes:
+      - ./backend:/app # Mapeia o código-fonte para hot-reloading
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    command: uvicorn main:app --host 0.0.0.0 --port ${BACKEND_PORT} --reload

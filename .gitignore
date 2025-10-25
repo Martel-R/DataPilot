@@ -1,0 +1,40 @@
+# Arquivos de ambiente - NUNCA SUBIR!
+.env
+.env.*
+!.env.example
+
+# Credenciais e configurações locais
+local.properties
+
+# Diretórios de dependências
+/node_modules
+/venv
+
+# Arquivos de IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs e bancos de dados locais
+logs/
+*.log
+*.sqlite3
+
+# Saída de build
+/build
+/dist
+
+# Caches
+.gradle/
+.cache/
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
